@@ -1,8 +1,8 @@
-package no.difi.statistics.ingest.client;
+package no.difi.statistics.client;
 
-import no.difi.statistics.ingest.client.model.IngestResponse;
-import no.difi.statistics.ingest.client.model.TimeSeriesDefinition;
-import no.difi.statistics.ingest.client.model.TimeSeriesPoint;
+import no.difi.statistics.client.model.IngestResponse;
+import no.difi.statistics.client.model.TimeSeriesDefinition;
+import no.difi.statistics.client.model.TimeSeriesPoint;
 
 import java.util.List;
 import java.util.Optional;

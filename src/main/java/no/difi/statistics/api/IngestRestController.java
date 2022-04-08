@@ -1,10 +1,10 @@
-package no.difi.statistics.ingest.api;
+package no.difi.statistics.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import no.difi.statistics.ingest.IngestService;
-import no.difi.statistics.ingest.validation.ValidOrgno;
+import no.difi.statistics.IngestService;
+import no.difi.statistics.validation.ValidOrgno;
 import no.difi.statistics.model.MeasurementDistance;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;

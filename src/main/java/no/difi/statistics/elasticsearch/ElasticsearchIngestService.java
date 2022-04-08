@@ -1,8 +1,8 @@
-package no.difi.statistics.ingest.elasticsearch;
+package no.difi.statistics.elasticsearch;
 
 import no.difi.statistics.elasticsearch.Timestamp;
-import no.difi.statistics.ingest.IngestService;
-import no.difi.statistics.ingest.api.IngestResponse;
+import no.difi.statistics.IngestService;
+import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.model.MeasurementDistance;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;

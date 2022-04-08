@@ -138,5 +138,10 @@
             <artifactId>httpcore</artifactId>
             <version>4.4.15</version>
         </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.17.1</version>
+        </dependency>
     </dependencies>
 </project>

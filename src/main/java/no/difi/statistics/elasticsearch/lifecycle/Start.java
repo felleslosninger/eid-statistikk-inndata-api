@@ -1,7 +1,7 @@
-package no.difi.statistics.ingest.elasticsearch.lifecycle;
+package no.difi.statistics.elasticsearch.lifecycle;
 
-import no.difi.statistics.ingest.config.AppConfig;
-import no.difi.statistics.ingest.elasticsearch.config.ElasticsearchConfig;
+import no.difi.statistics.config.AppConfig;
+import no.difi.statistics.elasticsearch.config.ElasticsearchConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

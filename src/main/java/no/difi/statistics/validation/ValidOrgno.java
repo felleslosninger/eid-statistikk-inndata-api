@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.validation;
+package no.difi.statistics.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -1,6 +1,6 @@
-package no.difi.statistics.ingest;
+package no.difi.statistics;
 
-import no.difi.statistics.ingest.api.IngestResponse;
+import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;
 

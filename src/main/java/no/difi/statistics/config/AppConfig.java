@@ -1,7 +1,7 @@
-package no.difi.statistics.ingest.config;
+package no.difi.statistics.config;
 
-import no.difi.statistics.ingest.api.IngestRestController;
-import no.difi.statistics.ingest.poc.RandomIngesterRestController;
+import no.difi.statistics.api.IngestRestController;
+import no.difi.statistics.poc.RandomIngesterRestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

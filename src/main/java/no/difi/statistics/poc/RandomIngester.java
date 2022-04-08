@@ -1,6 +1,6 @@
-package no.difi.statistics.ingest.poc;
+package no.difi.statistics.poc;
 
-import no.difi.statistics.ingest.IngestService;
+import no.difi.statistics.IngestService;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;
 import org.springframework.boot.ApplicationArguments;

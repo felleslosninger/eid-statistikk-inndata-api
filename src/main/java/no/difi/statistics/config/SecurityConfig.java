@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.config;
+package no.difi.statistics.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

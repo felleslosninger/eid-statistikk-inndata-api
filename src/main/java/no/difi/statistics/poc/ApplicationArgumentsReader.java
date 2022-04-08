@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.poc;
+package no.difi.statistics.poc;
 
 import org.springframework.boot.ApplicationArguments;
 

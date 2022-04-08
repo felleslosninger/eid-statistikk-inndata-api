@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.client;
+package no.difi.statistics.client;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,9 +9,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import no.difi.statistics.ingest.client.model.IngestResponse;
-import no.difi.statistics.ingest.client.model.TimeSeriesDefinition;
-import no.difi.statistics.ingest.client.model.TimeSeriesPoint;
+import no.difi.statistics.client.model.IngestResponse;
+import no.difi.statistics.client.model.TimeSeriesDefinition;
+import no.difi.statistics.client.model.TimeSeriesPoint;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

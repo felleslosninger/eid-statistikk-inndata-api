@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.client.model;
+package no.difi.statistics.client.model;
 
 public enum MeasurementDistance {
     minutes,

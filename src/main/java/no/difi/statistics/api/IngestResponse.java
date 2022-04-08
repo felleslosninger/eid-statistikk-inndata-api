@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.client.model;
+package no.difi.statistics.api;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
-import static no.difi.statistics.ingest.client.model.IngestResponse.Status.Ok;
 
 @XmlRootElement
 public class IngestResponse {
@@ -17,10 +16,6 @@ public class IngestResponse {
 
     private IngestResponse() {
         // Use builder
-    }
-
-    public boolean ok() {
-        return statuses.stream().noneMatch(status -> status != Ok);
     }
 
     @XmlElement

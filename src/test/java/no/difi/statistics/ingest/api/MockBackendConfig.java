@@ -1,7 +1,7 @@
 package no.difi.statistics.ingest.api;
 
-import no.difi.statistics.ingest.IngestService;
-import no.difi.statistics.ingest.config.BackendConfig;
+import no.difi.statistics.IngestService;
+import no.difi.statistics.config.BackendConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

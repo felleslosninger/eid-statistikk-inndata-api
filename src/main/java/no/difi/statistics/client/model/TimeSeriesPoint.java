@@ -1,4 +1,4 @@
-package no.difi.statistics.ingest.client.model;
+package no.difi.statistics.client.model;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

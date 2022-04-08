@@ -1,7 +1,7 @@
-package no.difi.statistics.ingest.config;
+package no.difi.statistics.config;
 
 import com.google.common.base.Predicates;
-import no.difi.statistics.ingest.api.IngestRestController;
+import no.difi.statistics.api.IngestRestController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
