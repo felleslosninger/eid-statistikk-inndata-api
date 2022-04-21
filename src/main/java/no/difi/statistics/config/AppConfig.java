@@ -5,10 +5,8 @@ import no.difi.statistics.poc.RandomIngesterRestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource("application.properties")
 public class AppConfig  {
 
 

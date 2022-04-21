@@ -47,12 +47,12 @@ public class ElasticsearchIngestService implements IngestService {
         for (TimeSeriesPoint point : dataPoints) {
             bulkRequest.add(
                     new IndexRequest(
-                            resolveIndexName()
+                            IndexNameResolver.resolveIndexName()
                                     .seriesDefinition(seriesDefinition)
-                                    .at(normalize(point.getTimestamp(), seriesDefinition.getDistance()))
+                                    .at(Timestamp.normalize(point.getTimestamp(), seriesDefinition.getDistance()))
                                     .single(),
                             indexType,
-                            id(point, seriesDefinition)
+                            IdResolver.id(point, seriesDefinition)
                     )
                             .source(document(point, seriesDefinition))
                             .create(false) // false->tillate update av requests. true->feilar på same request fleire gonger
@@ -69,7 +69,7 @@ public class ElasticsearchIngestService implements IngestService {
 
     @Override
     public TimeSeriesPoint last(TimeSeriesDefinition seriesDefinition) {
-        List<String> indexNames = resolveIndexName().seriesDefinition(seriesDefinition).list();
+        List<String> indexNames = IndexNameResolver.resolveIndexName().seriesDefinition(seriesDefinition).list();
         SearchRequest request = new SearchRequest(indexNames.toArray(new String[0]))
                 .types(indexType)
                 .indicesOptions(IndicesOptions.fromOptions(true, true, true, false))
@@ -150,7 +150,7 @@ public class ElasticsearchIngestService implements IngestService {
     }
 
     private static String format(ZonedDateTime timestamp, MeasurementDistance distance) {
-        return normalize(timestamp, distance).toString();
+        return Timestamp.normalize(timestamp, distance).toString();
     }
 
 }
