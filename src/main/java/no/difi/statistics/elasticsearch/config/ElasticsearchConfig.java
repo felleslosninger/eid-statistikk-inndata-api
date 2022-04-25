@@ -11,10 +11,14 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,9 +29,14 @@ public class ElasticsearchConfig implements BackendConfig {
 
     private final Environment environment;
 
+    private final String elasticSearchHost;
+    private final int elasticSearchPort;
+
     @Autowired
-    public ElasticsearchConfig(Environment environment) {
+    public ElasticsearchConfig(Environment environment, @Value("${no.difi.statistics.elasticsearch.host}") String elasticSearchHost, @Value("${no.difi.statistics.elasticsearch.port}") int elasticSearchPort) {
         this.environment = environment;
+        this.elasticSearchHost = elasticSearchHost;
+        this.elasticSearchPort = elasticSearchPort;
     }
 
     @Bean
@@ -39,7 +48,7 @@ public class ElasticsearchConfig implements BackendConfig {
     public Client elasticsearchClient() {
         return new Client(
                 elasticsearchHighLevelClient(),
-                getHttpScheme()+"://" + elasticsearchHost() + ":" + elasticsearchPort()
+                getHttpScheme()+"://" + elasticSearchHost + ":" + elasticSearchPort
         );
     }
 
@@ -49,11 +58,8 @@ public class ElasticsearchConfig implements BackendConfig {
     }
 
     private RestClientBuilder elasticsearchLowLevelClient() {
-        String host = environment.getRequiredProperty("no.difi.statistics.elasticsearch.host");
-        int port = environment.getRequiredProperty("no.difi.statistics.elasticsearch.port", Integer.class);
-
         Header[] headers = new Header[]{new BasicHeader("Authorization","ApiKey " + loadApiKey())};
-        RestClientBuilder builder = RestClient.builder(new HttpHost(host, port, getHttpScheme()));
+        RestClientBuilder builder = RestClient.builder(new HttpHost(elasticSearchHost, elasticSearchPort, getHttpScheme()));
         builder.setDefaultHeaders(headers);
         return builder;
     }
@@ -61,26 +67,17 @@ public class ElasticsearchConfig implements BackendConfig {
     private String loadApiKey(){
         final String fileName = environment.getRequiredProperty("file.base.difi-statistikk");
         try {
-            final Path pathToPasswordFile = Paths.get(fileName);
+            final Path pathToPasswordFile = ResourceUtils.getFile(fileName).toPath();
             return new String(Files.readAllBytes(pathToPasswordFile));
         } catch (IOException e) {
             throw new RuntimeException("Failed to load file defined in environment property 'file.base.difi-statistikk': " + fileName, e);
         }
     }
 
-    private String elasticsearchHost() {
-        return environment.getRequiredProperty("no.difi.statistics.elasticsearch.host");
-    }
-
-    private int elasticsearchPort() {
-        return environment.getRequiredProperty("no.difi.statistics.elasticsearch.port", Integer.class);
-    }
-
-
     private String getHttpScheme(){
         String scheme = "http";
         // TODO put this into config?
-        if (elasticsearchHost().endsWith("elastic-cloud.com")) {
+        if (elasticSearchHost.endsWith("elastic-cloud.com")) {
             scheme = "https";
         }
         return scheme;

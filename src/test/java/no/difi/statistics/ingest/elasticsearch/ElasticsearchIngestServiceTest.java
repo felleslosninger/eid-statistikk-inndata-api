@@ -14,7 +14,6 @@ import com.nimbusds.jwt.SignedJWT;
 import no.difi.statistics.elasticsearch.Client;
 import no.difi.statistics.elasticsearch.IdResolver;
 import no.difi.statistics.api.IngestResponse;
-import no.difi.statistics.config.AppConfig;
 import no.difi.statistics.elasticsearch.config.ElasticsearchConfig;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;

@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.http.HttpStatus;
 
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -88,8 +89,10 @@ public class IngestClientTest {
 
     @Test
     public void shouldFailWithFailedWhenSomethingFailsInTransmission() {
-        createWiremockStub(HttpURLConnection.HTTP_OK);
-        wireMockRule.addRequestProcessingDelay(10000);
+        wireMockRule.stubFor(
+                any(urlPathMatching(".*")).willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withStatus(HttpStatus.OK.value()).withFixedDelay(10000)));
         expectedEx.expect(IngestService.Failed.class);
         ingestClient.ingest(aSeriesDefinition(), twoPoints(), BEARER_TOKEN);
     }
