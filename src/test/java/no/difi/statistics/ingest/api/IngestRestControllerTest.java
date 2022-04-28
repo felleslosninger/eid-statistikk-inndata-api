@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import no.difi.statistics.IngestService;
+import no.difi.statistics.InndataAPI;
+import no.difi.statistics.api.IngestRestController;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;
 import org.junit.After;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,9 +47,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@ContextConfiguration(classes = {AppConfig.class, MockBackendConfig.class})
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"management.endpoints.enabled-by-default = false", "spring.autoconfigure.exclude = org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration"})
+@ContextConfiguration(classes = {IngestRestController.class, InndataAPI.class})
 @AutoConfigureMockMvc
+@ActiveProfiles("unittest")
 public class IngestRestControllerTest {
 
     static final String PREFIX = "digdir";
@@ -55,8 +59,8 @@ public class IngestRestControllerTest {
     static final String OWNER = "991825827";
 
 
-    @Autowired
-    private IngestService service;
+    @MockBean
+    private IngestService ingestService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -104,7 +108,7 @@ public class IngestRestControllerTest {
                         .ingest()
         )
                 .andExpect(status().is(HttpStatus.OK.value()));
-        verify(service).ingest(
+        verify(ingestService).ingest(
                 eq(TimeSeriesDefinition.builder().name("aTimeSeries").distance(minutes).owner(orgno)),
                 eq(singletonList(timeSeriesPoint))
         );
@@ -149,7 +153,7 @@ public class IngestRestControllerTest {
 
     @Test
     public void whenRequestingLastPointInASeriesThenNoAuthenticationIsRequired() throws Exception {
-        when(service.last(any(TimeSeriesDefinition.class))).thenReturn(aPoint());
+        when(ingestService.last(any(TimeSeriesDefinition.class))).thenReturn(aPoint());
         mockMvc.perform(request().distance("minutes").last())
                 .andExpect(status().is(HttpStatus.OK.value()));
     }

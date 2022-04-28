@@ -1,6 +1,5 @@
 package no.difi.statistics.elasticsearch;
 
-import no.difi.statistics.elasticsearch.Timestamp;
 import no.difi.statistics.IngestService;
 import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.model.MeasurementDistance;
@@ -23,9 +22,6 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static no.difi.statistics.elasticsearch.IdResolver.id;
-import static no.difi.statistics.elasticsearch.IndexNameResolver.resolveIndexName;
-import static no.difi.statistics.elasticsearch.Timestamp.normalize;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import static org.elasticsearch.search.aggregations.AggregationBuilders.terms;
 import static org.elasticsearch.search.aggregations.BucketOrder.key;

@@ -11,9 +11,10 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import no.difi.statistics.InndataAPI;
+import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.elasticsearch.Client;
 import no.difi.statistics.elasticsearch.IdResolver;
-import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.elasticsearch.config.ElasticsearchConfig;
 import no.difi.statistics.model.TimeSeriesDefinition;
 import no.difi.statistics.model.TimeSeriesPoint;
@@ -50,9 +51,9 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.util.Collections.singletonList;
-import static no.difi.statistics.elasticsearch.IndexNameResolver.resolveIndexName;
 import static no.difi.statistics.api.IngestResponse.Status.Conflict;
 import static no.difi.statistics.api.IngestResponse.Status.Ok;
+import static no.difi.statistics.elasticsearch.IndexNameResolver.resolveIndexName;
 import static no.difi.statistics.model.TimeSeriesDefinition.builder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -65,10 +66,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-@ContextConfiguration(classes = {AppConfig.class,ElasticsearchConfig.class}, initializers = ElasticsearchIngestServiceTest.Initializer.class)
+@ContextConfiguration(classes = { InndataAPI.class, ElasticsearchConfig.class}, initializers = ElasticsearchIngestServiceTest.Initializer.class)
 @TestPropertySource(properties = {"file.base.difi-statistikk=src/test/resources/apikey"})
-@RunWith(SpringRunner.class)
 @ActiveProfiles("test")
+@RunWith(SpringRunner.class)
 public class ElasticsearchIngestServiceTest {
 
     @ClassRule

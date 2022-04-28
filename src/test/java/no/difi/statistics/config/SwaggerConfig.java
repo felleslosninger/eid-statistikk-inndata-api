@@ -90,7 +90,7 @@ public class SwaggerConfig {
 
     private List<AuthorizationScope> scopes() {
         List<AuthorizationScope> list = new ArrayList<>();
-        list.add(new AuthorizationScope("digdir:statistikk.skriv", "Skrivetilgong til Statistikk-api for innlegging av tidserier"));
+        list.add(new AuthorizationScope("digdir:statistikk.skriv", "Skrivetilgong til Statistikk-api for innlegging av tidsserier"));
         return list;
     }
 
