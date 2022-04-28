@@ -1,0 +1,22 @@
+file:
+    base:
+        difi-statistikk: src/test/resources/apikey
+logging:
+    level:
+        'no':
+            difi: INFO
+        org: INFO
+management:
+    endpoints:
+        web:
+            base-path: /
+spring:
+    jackson:
+        default-property-inclusion: NON_EMPTY
+        serialization:
+            WRITE_DATES_AS_TIMESTAMPS: false
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: http://localhost:8888/idporten-oidc-provider/
