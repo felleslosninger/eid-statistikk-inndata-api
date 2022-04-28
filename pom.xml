@@ -40,11 +40,6 @@
             <version>1.16.3</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>no.difi.statistics</groupId>
-            <artifactId>statistics-common-lib</artifactId>
-            <version>${statistics-common-api-lib.version}</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
