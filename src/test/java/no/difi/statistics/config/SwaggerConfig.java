@@ -1,6 +1,5 @@
 package no.difi.statistics.config;
 
-import com.google.common.base.Predicates;
 import no.difi.statistics.api.IngestRestController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,6 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import static springfox.documentation.builders.RequestHandlerSelectors.basePacka
 
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
@@ -48,8 +45,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(basePackage(IngestRestController.class.getPackage().getName()))
                 .paths(any())
-                .paths(Predicates.not(PathSelectors.regex("/version")))
-                .paths(Predicates.not(PathSelectors.regex("/health")))
+                .paths(PathSelectors.regex("/version").negate())
+                .paths(PathSelectors.regex("/health").negate())
                 .build()
                 .securitySchemes(singletonList(oauth()))
                 .securityContexts(singletonList(securityContext()))

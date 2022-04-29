@@ -36,8 +36,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static no.difi.statistics.model.MeasurementDistance.minutes;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -76,7 +74,7 @@ public class IngestRestControllerTest {
     @Test
     public void whenRequestingIndexThenAuthorizationIsNotRequired() throws Exception {
         mockMvc.perform(get("/")).andExpect(status().is(HttpStatus.FOUND.value())).andExpect(header().string("Location", equalTo("swagger-ui.html")));
-        mockMvc.perform(get("/swagger-ui.html")).andExpect(status().is(HttpStatus.OK.value()));
+        mockMvc.perform(get("/swagger-ui/index.html")).andExpect(status().is(HttpStatus.OK.value()));
     }
 
     @Test
