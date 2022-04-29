@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // No authentication required for documentation paths used by Swagger
-                .antMatchers(GET, "/", "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs/**", "/webjars/**").permitAll()
+                .antMatchers(GET, "/", "/swagger-ui/index.html", "/swagger-resources/**", "/v2/api-docs/**", "/webjars/**").permitAll()
                 // No authentication required for health check path or env
                 .antMatchers(GET, "/health", "/env/**").permitAll()
                 // Authentication required for ingest methods. Username must be equal to owner of series.
