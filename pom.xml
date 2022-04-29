@@ -23,6 +23,16 @@
         <statistics-client-lib.version>0.0.1</statistics-client-lib.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/felleslosninger/eid-statistikk-common-api-lib</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -129,7 +139,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${parent.version}</version>
+                <version>${project.parent.version}</version>
             </plugin>
         </plugins>
     </build>
