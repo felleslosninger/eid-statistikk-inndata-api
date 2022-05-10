@@ -1,8 +1,9 @@
 package no.difi.statistics.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import no.difi.statistics.IngestService;
 import no.difi.statistics.model.MeasurementDistance;
 import no.difi.statistics.model.TimeSeriesDefinition;
@@ -17,14 +18,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.view.RedirectView;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 @Validated
-@Api(tags = "Statistikk-inndata-api", description = "Legg data inn i statistikk-databasen")
+@Tag(name = "Statistikk-inndata-api", description = "Legg data inn i statistikk-databasen")
 @RestController
 public class IngestRestController {
     private static final String DIGDIR_ORGNR = "991825827";
@@ -38,11 +38,11 @@ public class IngestRestController {
         this.ingestService = ingestService;
     }
 
-    @ApiIgnore
+/*    @Parameter(hidden = true)
     @GetMapping("/")
     public RedirectView index() {
         return new RedirectView("swagger-ui.html");
-    }
+    }*/
 
     @ExceptionHandler(IngestService.TimeSeriesPointAlreadyExists.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -50,19 +50,20 @@ public class IngestRestController {
         // Do nothing
     }
 
-    @ApiOperation(value = "Legg inn data for ein tidsserie for din organisasjon. Organisasjonen må ha fått tilgong til dette i forkant i Maskinporten.")
+    @Operation(summary = "Legg inn data for ein tidsserie for din organisasjon. Organisasjonen må ha fått tilgong til dette i forkant i Maskinporten.", security = {@SecurityRequirement(name = "bearer-key")})
+//    @Operation(summary = "Legg inn data for ein tidsserie for din organisasjon. Organisasjonen må ha fått tilgong til dette i forkant i Maskinporten.")
     @PostMapping(
             value = "{owner}/{seriesName}/{distance}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     @PreAuthorize("hasAuthority('SCOPE_digdir:statistikk.skriv')")
     public IngestResponse ingest(
-            @ApiIgnore @AuthenticationPrincipal Jwt principal,
-            @ApiParam(value = OWNER_EXPLANATION, example = DIGDIR_ORGNR, required = true)
+            @Parameter(hidden = true) @AuthenticationPrincipal Jwt principal,
+            @Parameter(name = OWNER_EXPLANATION, example = DIGDIR_ORGNR, required = true)
             @PathVariable String owner, @ValidOrgno
-            @ApiParam(value = SERIES_NAME_EXPLANATION, required = true)
+            @Parameter(name = SERIES_NAME_EXPLANATION, required = true)
             @PathVariable String seriesName,
-            @ApiParam(value = DISTANCE_EXPLANATION, required = true)
+            @Parameter(name = DISTANCE_EXPLANATION, required = true)
             @PathVariable MeasurementDistance distance,
             @RequestBody List<TimeSeriesPoint> dataPoints
     ) {
@@ -93,14 +94,14 @@ public class IngestRestController {
         return id.substring(id.indexOf(":") + 1);
     }
 
-    @ApiOperation(value = "Hent nyaste datapunkt frå ein tidsserie")
+    @Operation(summary = "Hent nyaste datapunkt frå ein tidsserie")
     @GetMapping("{owner}/{seriesName}/{distance}/last")
     public TimeSeriesPoint last(
-            @ApiParam(value = OWNER_EXPLANATION, example = DIGDIR_ORGNR, required = true)
+            @Parameter(name = OWNER_EXPLANATION, example = DIGDIR_ORGNR, required = true)
             @PathVariable @ValidOrgno String owner,
-            @ApiParam(value = SERIES_NAME_EXPLANATION, required = true)
+            @Parameter(name = SERIES_NAME_EXPLANATION, required = true)
             @PathVariable String seriesName,
-            @ApiParam(value = DISTANCE_EXPLANATION, required = true)
+            @Parameter(name = DISTANCE_EXPLANATION, required = true)
             @PathVariable MeasurementDistance distance,
             HttpServletResponse response
     ) {

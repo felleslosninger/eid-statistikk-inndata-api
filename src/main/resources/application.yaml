@@ -17,6 +17,8 @@ management:
                 host: localhost
                 port: 9200
 spring:
+    main:
+        allow-circular-references: true
     jackson:
         default-property-inclusion: NON_EMPTY
         serialization:
@@ -26,3 +28,8 @@ spring:
             resourceserver:
                 jwt:
                     issuer-uri: https://test1.maskinporten.no/
+springdoc:
+    swagger-ui:
+        oauth:
+            client-id: test
+            client-secret: test2

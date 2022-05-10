@@ -12,6 +12,7 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import no.difi.statistics.InndataAPI;
+import no.difi.statistics.PropertyLogger;
 import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.elasticsearch.Client;
 import no.difi.statistics.elasticsearch.IdResolver;
@@ -24,16 +25,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -63,14 +68,19 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * Komponent- og (delvis) integrasjonstest av inndata-tjenesten. Integrasjon mot <code>elasticsearch</code>-tjenesten
  * verifiseres, mens <code>authenticate</code>-tjenesten mockes.
  */
-@SpringBootTest(
-        webEnvironment = RANDOM_PORT
-)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = { InndataAPI.class, ElasticsearchConfig.class}, initializers = ElasticsearchIngestServiceTest.Initializer.class)
 @TestPropertySource(properties = {"file.base.difi-statistikk=src/test/resources/apikey"})
-@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
+@ActiveProfiles("test")
+//@WithMockUser("foo")
 public class ElasticsearchIngestServiceTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertyLogger.class);
+/*    @Configuration
+    static class ResourceServerConfiguration implements ResourceServerConfigurer {
+
+    }*/
 
     @ClassRule
     public static ElasticsearchRule elasticsearchRule = new ElasticsearchRule();
@@ -100,6 +110,7 @@ public class ElasticsearchIngestServiceTest {
     public static WireMockRule maskinporten = new WireMockRule(8888);
 
     private static final String wellKnown = "{\"issuer\":\"http://localhost:8888/idporten-oidc-provider/\",\"authorization_endpoint\":\"http://localhost:8888/idporten-oidc-provider/authorize\",\"pushed_authorization_request_endpoint\":\"http://localhost:8888/idporten-oidc-provider/par\",\"token_endpoint\":\"http://localhost:8888/idporten-oidc-provider/token\",\"end_session_endpoint\":\"http://localhost:8888/idporten-oidc-provider/endsession\",\"revocation_endpoint\":\"http://localhost:8888/idporten-oidc-provider/revoke\",\"jwks_uri\":\"http://localhost:8888/idporten-oidc-provider/jwk\",\"response_types_supported\":[\"code\",\"id_token\",\"id_token token\",\"token\"],\"response_modes_supported\":[\"query\",\"form_post\",\"fragment\"],\"subject_types_supported\":[\"pairwise\"],\"id_token_signing_alg_values_supported\":[\"RS256\"],\"code_challenge_methods_supported\":[\"S256\"],\"userinfo_endpoint\":\"http://localhost:8888/idporten-oidc-provider/userinfo\",\"scopes_supported\":[\"openid\",\"profile\"],\"ui_locales_supported\":[\"nb\",\"nn\",\"en\",\"se\"],\"acr_values_supported\":[\"Level3\",\"Level4\"],\"frontchannel_logout_supported\":true,\"frontchannel_logout_session_supported\":true,\"introspection_endpoint\":\"http://localhost:8888/idporten-oidc-provider/tokeninfo\",\"token_endpoint_auth_methods_supported\":[\"client_secret_post\",\"client_secret_basic\",\"private_key_jwt\",\"none\"],\"request_parameter_supported\":true,\"request_uri_parameter_supported\":false,\"request_object_signing_alg_values_supported\":[\"RS256\",\"RS384\",\"RS512\"]}";
+
     private static String kid = "mykey10";
     private static RSAKey jwk;
 
@@ -192,7 +203,7 @@ public class ElasticsearchIngestServiceTest {
     }
 
     @Test
-    public void whenBulkIngestingUdateOfPointsThenAllPointsAreIngestedAndLastUpdatedStored() {
+    public void whenBulkIngestingUpdateOfPointsThenAllPointsAreIngestedAndLastUpdatedStored() {
         TimeSeriesPoint point1 = point().timestamp(now).measurement("aMeasurement", 103L).build();
         TimeSeriesPoint updateOfPoint1 = point().timestamp(now).measurement("aMeasurement", 2354L).build();
         TimeSeriesPoint point2 = point().timestamp(now.plusMinutes(1)).measurement("aMeasurement", 567543L).build();
@@ -367,6 +378,7 @@ public class ElasticsearchIngestServiceTest {
     private <T> HttpEntity<T> request(T entity) {
         final String token = signJwt(createJWTClaimsSet());
         HttpHeaders headers = new HttpHeaders();
+        LOGGER.info("request: {}", token);
         headers.add("Authorization", "Bearer " +  token);
         return new HttpEntity<>(
                 entity,

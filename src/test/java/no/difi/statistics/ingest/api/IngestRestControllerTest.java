@@ -73,7 +73,7 @@ public class IngestRestControllerTest {
 
     @Test
     public void whenRequestingIndexThenAuthorizationIsNotRequired() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().is(HttpStatus.FOUND.value())).andExpect(header().string("Location", equalTo("swagger-ui.html")));
+        mockMvc.perform(get("/swagger-ui.html")).andExpect(status().is(HttpStatus.FOUND.value())).andExpect(header().string("Location", equalTo("/swagger-ui/index.html")));
         mockMvc.perform(get("/swagger-ui/index.html")).andExpect(status().is(HttpStatus.OK.value()));
     }
 
