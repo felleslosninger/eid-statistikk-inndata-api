@@ -1,12 +1,12 @@
 package no.difi.statistics.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -19,9 +19,9 @@ import static java.util.Collections.unmodifiableMap;
 import static java.util.stream.Collectors.joining;
 
 
-@XmlRootElement
 public class TimeSeriesPoint implements Comparable<TimeSeriesPoint> {
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime timestamp;
     private Map<String, Long> measurements = new HashMap<>();
     private Map<String, String> categories;
@@ -30,12 +30,10 @@ public class TimeSeriesPoint implements Comparable<TimeSeriesPoint> {
         // Use builder
     }
 
-    @XmlElement
     public ZonedDateTime getTimestamp() {
         return timestamp;
     }
 
-    @XmlElement
     public Map<String, Long> getMeasurements() {
         return measurements;
     }
@@ -153,13 +151,14 @@ public class TimeSeriesPoint implements Comparable<TimeSeriesPoint> {
         }
 
     }
+
     @Override
     public String toString() {
         return "TimeSeriesPoint{" +
                 "timestamp=" + timestamp +
                 ", measurements=" + measurements +
                 (categories != null ? format(", categories=%s", categoriesAsString()) : "") +
-        '}';
+                '}';
     }
 
     private String categoriesAsString() {

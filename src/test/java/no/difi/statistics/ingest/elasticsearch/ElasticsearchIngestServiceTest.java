@@ -33,12 +33,10 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -69,7 +67,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * verifiseres, mens <code>authenticate</code>-tjenesten mockes.
  */
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@ContextConfiguration(classes = { InndataAPI.class, ElasticsearchConfig.class}, initializers = ElasticsearchIngestServiceTest.Initializer.class)
+@ContextConfiguration(classes = {InndataAPI.class, ElasticsearchConfig.class}, initializers = ElasticsearchIngestServiceTest.Initializer.class)
 @TestPropertySource(properties = {"file.base.difi-statistikk=src/test/resources/apikey"})
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -115,21 +113,28 @@ public class ElasticsearchIngestServiceTest {
     private static RSAKey jwk;
 
     @BeforeClass
-    public static void setupMaskinporten(){
+    public static void setupMaskinporten() {
         maskinporten.stubFor(any(urlMatching(".*well-known.*"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBody(wellKnown)));
-
         jwk = createKey();
         maskinporten.stubFor(any(urlMatching(".*jwk.*"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
-                        .withBody("{\"keys\":["+jwk.toJSONString()+"]}")));
+                        .withBody("{\"keys\":[" + jwk.toJSONString() + "]}")));
+
+        /* Add logging of request and any matched response. */
+        maskinporten.addMockServiceRequestListener((request, response) -> {
+            LOGGER.info("WireMock request at URL: {}", request.getAbsoluteUrl());
+            LOGGER.info("WireMock request headers: \n{}", request.getHeaders());
+            LOGGER.info("WireMock response body: \n{}", response.getBodyAsString());
+            LOGGER.info("WireMock response headers: \n{}", response.getHeaders());
+        });
     }
 
     @AfterClass
-    public static void reset(){
+    public static void reset() {
         maskinporten.resetAll();
     }
 
@@ -166,7 +171,7 @@ public class ElasticsearchIngestServiceTest {
     }
 
 
-    private JWTClaimsSet createJWTClaimsSet(){
+    private JWTClaimsSet createJWTClaimsSet() {
         final HashMap<String, String> consumer = new HashMap<>();
         consumer.put("authority", "iso6523-actorid-upis");
         consumer.put("ID", "0192:" + owner);
@@ -260,8 +265,18 @@ public class ElasticsearchIngestServiceTest {
         assertEquals(Ok, response.getBody().getStatuses().get(0));
         assertEquals(
                 format("%s@%s@minute%d", owner, seriesDefinition.getName(), now.getYear()),
-                elasticsearchHelper.indices()[0]
+                returnFirstNonGeoIpIndex(elasticsearchHelper.indices())
         );
+    }
+
+    private String returnFirstNonGeoIpIndex(String[] indices) {
+        for (String index : indices) {
+            if (!index.contains("geoip")) {
+                return index;
+            }
+        }
+
+        throw new IllegalArgumentException("No indices without geoip exists.");
     }
 
     @Test
@@ -290,7 +305,7 @@ public class ElasticsearchIngestServiceTest {
         );
         TimeSeriesDefinition seriesDefinition = seriesDefinition().name("series").minutes().owner(owner);
         final ResponseEntity<IngestResponse> ingest = ingest(seriesDefinition, points.get(0), points.get(1), points.get(2));
-        assertEquals(HttpStatus.OK,ingest.getStatusCode());
+        assertEquals(HttpStatus.OK, ingest.getStatusCode());
         elasticsearchHelper.refresh();
         JSONObject lastPoint = new JSONObject(last("series").getBody());
         assertEquals(now.plusMinutes(2).format(ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")), lastPoint.get("timestamp"));
@@ -366,8 +381,8 @@ public class ElasticsearchIngestServiceTest {
         );
     }
 
-    private ResponseEntity<String> last(String series)  {
-         return restTemplate.getForEntity(
+    private ResponseEntity<String> last(String series) {
+        return restTemplate.getForEntity(
                 "/{owner}/{seriesName}/minutes/last",
                 String.class,
                 owner,
@@ -379,7 +394,7 @@ public class ElasticsearchIngestServiceTest {
         final String token = signJwt(createJWTClaimsSet());
         HttpHeaders headers = new HttpHeaders();
         LOGGER.info("request: {}", token);
-        headers.add("Authorization", "Bearer " +  token);
+        headers.add("Authorization", "Bearer " + token);
         return new HttpEntity<>(
                 entity,
                 headers
