@@ -243,7 +243,6 @@ public class IngestRestControllerTest {
         return new ObjectMapper()
                 .registerModule(new JavaTimeModule())
                 .registerModule(new Jdk8Module())
-                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
                 .writeValueAsString(object);
     }
 
