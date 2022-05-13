@@ -73,7 +73,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @ActiveProfiles("test")
 public class ElasticsearchIngestServiceTest {
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(PropertyLogger.class); Fjern udkommentering af @Component i PropertyLogger for at aktivere.
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertyLogger.class);
 
     @ClassRule
     public static ElasticsearchRule elasticsearchRule = new ElasticsearchRule();
@@ -119,13 +119,13 @@ public class ElasticsearchIngestServiceTest {
                         .withHeader("Content-Type", "application/json")
                         .withBody("{\"keys\":[" + jwk.toJSONString() + "]}")));
         /* Add logging of request and any matched response. */
-/*
+
         maskinporten.addMockServiceRequestListener((request, response) -> {
             LOGGER.info("WireMock request at URL: {}", request.getAbsoluteUrl());
             LOGGER.info("WireMock request headers: \n{}", request.getHeaders());
             LOGGER.info("WireMock response body: \n{}", response.getBodyAsString());
             LOGGER.info("WireMock response headers: \n{}", response.getHeaders());
-        });*/
+        });
     }
 
     @AfterClass

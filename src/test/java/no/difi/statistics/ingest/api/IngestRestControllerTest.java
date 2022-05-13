@@ -123,6 +123,7 @@ public class IngestRestControllerTest {
                         .distance("minutes")
                         .ingest()
         )
+                .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()));
     }
 
