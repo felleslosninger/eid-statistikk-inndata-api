@@ -123,7 +123,6 @@ public class IngestRestControllerTest {
                         .distance("minutes")
                         .ingest()
         )
-                .andDo(print())
                 .andExpect(status().is(HttpStatus.OK.value()));
     }
 
@@ -259,7 +258,5 @@ public class IngestRestControllerTest {
         headers.put("testheader", "test");
         return Jwt.withTokenValue("val").header("testheader", "testheader").claim("scope", scope).claim("consumer", consumer).issuedAt(Instant.now()).expiresAt(Instant.now().plusSeconds(50L)).build();
     }
-
-
 
 }
