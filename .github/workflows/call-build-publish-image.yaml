@@ -12,7 +12,7 @@ jobs:
     uses: felleslosninger/eid-github-workflows/.github/workflows/eid-spring-boot-build-publish-image-generic.yml@main
     with:
       image-name: inndata-api
-      java-version: 8
+      java-version: 17
       allure-enabled: false
     secrets:
       eid-build-token: ${{ secrets.EID_BUILD_PAT }}

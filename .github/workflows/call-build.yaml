@@ -12,7 +12,7 @@ jobs:
   call-workflow-image-build-publish:
     uses: felleslosninger/eid-github-workflows/.github/workflows/eid-maven-build.yml@main
     with:
-      java-version: 8
+      java-version: 17
     secrets:
       maven-user: ${{ secrets.MAVEN_USER }}
       maven-password: ${{ secrets.MAVEN_PASSWORD }}
