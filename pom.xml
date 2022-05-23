@@ -19,8 +19,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <statistics-common-api-lib.version>0.0.10</statistics-common-api-lib.version>
-        <statistics-client-lib.version>0.0.2</statistics-client-lib.version>
+        <statistics-common-api-lib.version>0.0.11</statistics-common-api-lib.version>
+        <statistics-client-lib.version>0.0.3</statistics-client-lib.version>
         <log4j.version>2.17.2</log4j.version>
         <springfox.version>3.0.0</springfox.version>
     </properties>
