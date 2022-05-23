@@ -14,18 +14,18 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.xcontent.XContentBuilder;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import static org.elasticsearch.search.aggregations.AggregationBuilders.terms;
 import static org.elasticsearch.search.aggregations.BucketOrder.key;
 import static org.elasticsearch.search.builder.SearchSourceBuilder.searchSource;
+import static org.elasticsearch.xcontent.XContentFactory.jsonBuilder;
 
 public class ElasticsearchIngestService implements IngestService {
 
