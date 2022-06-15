@@ -1,0 +1,18 @@
+'no':
+    difi:
+        statistics:
+            elasticsearch:
+                host: 7834108d7d5d491587be2a1a9452d636.northeurope.azure.elastic-cloud.com
+                port: 9243
+                apikey: ${ELASTICSEARCH_API_KEY}
+spring:
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    issuer-uri: https://maskinporten.dev/
+springdoc:
+    swagger-ui:
+        oauth:
+            client-id: test
+            client-secret: test2

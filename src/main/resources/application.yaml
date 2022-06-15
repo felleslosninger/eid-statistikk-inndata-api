@@ -1,6 +1,3 @@
-file:
-    base:
-        difi-statistikk: classpath:inndata-api-elasticsearch-local-key.txt
 logging:
     level:
         'no':
@@ -16,6 +13,8 @@ management:
             elasticsearch:
                 host: localhost
                 port: 9200
+                apikey: fake-secret
+
 spring:
     jackson:
         default-property-inclusion: NON_EMPTY
