@@ -11,7 +11,7 @@ jobs:
   call-build-publish-image:
     uses: felleslosninger/eid-github-workflows/.github/workflows/eid-spring-boot-build-publish-image-generic.yml@main
     with:
-      image-name: inndata-api
+      image-name: event-statistikk/inndata-api
       java-version: 17
       allure-enabled: false
     secrets:
@@ -24,15 +24,15 @@ jobs:
       allure-user: ${{ secrets.ALLURE_USER }}
       allure-password: ${{ secrets.ALLURE_PASSWORD }}
 
-#  call-update-image-version:
-#    needs: call-build-publish-image
-#    uses: felleslosninger/eid-github-workflows/.github/workflows/eid-update-image-version.yml@main
-#    with:
-#      image-name: inndata-api
-#      image-version: ${{ needs.call-build-publish-image.outputs.image-version }}
-#      image-digest: ${{ needs.call-build-publish-image.outputs.image-digest }}
-#      kubernetes-repo: XXX
-#      kubernetes-repo-event: update-version
-#    secrets:
-#      eid-build-token: ${{ secrets.EID_BUILD_PAT }}
-#      registry-url: ${{ secrets.REGISTRY_URL }}
+  call-update-image-version:
+    needs: call-build-publish-image
+    uses: felleslosninger/eid-github-workflows/.github/workflows/eid-update-image-version.yml@main
+    with:
+      image-name: event-statistikk/inndata-api
+      image-version: ${{ needs.call-build-publish-image.outputs.image-version }}
+      image-digest: ${{ needs.call-build-publish-image.outputs.image-digest }}
+      kubernetes-repo: eid-event-statistikk
+      kubernetes-repo-event: update-version
+    secrets:
+      eid-build-token: ${{ secrets.EID_BUILD_PAT }}
+      registry-url: ${{ secrets.REGISTRY_URL }}
