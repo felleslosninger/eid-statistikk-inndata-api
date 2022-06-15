@@ -11,8 +11,3 @@ spring:
             resourceserver:
                 jwt:
                     issuer-uri: https://maskinporten.dev/
-springdoc:
-    swagger-ui:
-        oauth:
-            client-id: test
-            client-secret: test2
