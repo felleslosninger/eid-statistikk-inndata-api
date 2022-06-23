@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import no.difi.statistics.IngestService;
 import no.difi.statistics.model.MeasurementDistance;
 import no.difi.statistics.model.TimeSeriesDefinition;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Validated
 @Tag(name = "Statistikk-inndata-api", description = "Legg data inn i statistikk-databasen")
 @RestController
@@ -38,11 +40,11 @@ public class IngestRestController {
         this.ingestService = ingestService;
     }
 
-/*    @Parameter(hidden = true)
+    @Parameter(hidden = true)
     @GetMapping("/")
     public RedirectView index() {
         return new RedirectView("swagger-ui.html");
-    }*/
+    }
 
     @ExceptionHandler(IngestService.TimeSeriesPointAlreadyExists.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -51,7 +53,6 @@ public class IngestRestController {
     }
 
     @Operation(summary = "Legg inn data for ein tidsserie for din organisasjon. Organisasjonen må ha fått tilgong til dette i forkant i Maskinporten.", security = {@SecurityRequirement(name = "bearer-key")})
-//    @Operation(summary = "Legg inn data for ein tidsserie for din organisasjon. Organisasjonen må ha fått tilgong til dette i forkant i Maskinporten.")
     @PostMapping(
             value = "{owner}/{seriesName}/{distance}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
