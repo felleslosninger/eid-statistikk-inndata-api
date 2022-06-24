@@ -1,0 +1,51 @@
+### Test with an invalid pid to see error Response
+POST http://localhost:8080/api/v1/idporten/person/.search
+Accept: application/json
+Content-Type: application/json
+
+{"pid": "01010111111"}
+
+
+###
+
+# curl -X 'POST'
+#  'http://localhost:8080/991825827/idporten-innlogging/minutes?from=2022-06-22T11%3A02%3A00&to=2022-06-22T11%3A03%3A00'
+#  -H 'accept: */*'
+#  -H 'Content-Type: application/json;charset=UTF-8'
+#  -d '[
+#  {
+#    "timestamp": "2022-06-23T11:18:11.697Z",
+#    "measurements": {
+#      "additionalProp1": 0,
+#      "additionalProp2": 0,
+#      "additionalProp3": 0
+#    },
+#    "categories": {
+#      "additionalProp1": "string",
+#      "additionalProp2": "string",
+#      "additionalProp3": "string"
+#    }
+#  }
+#]'
+POST http://localhost:8080/991825827/idporten-innlogging/minutes?from=2022-06-22T11%3A02%3A00&to=2022-06-22T11%3A03%3A00
+accept: */*
+Content-Type: application/json;charset=UTF-8
+
+[
+  {
+    "timestamp": "2022-06-23T11:18:11.697Z",
+    "measurements": {
+      "additionalProp1": 0,
+      "additionalProp2": 0,
+      "additionalProp3": 0
+    },
+    "categories": {
+      "additionalProp1": "string",
+      "additionalProp2": "string",
+      "additionalProp3": "string"
+    }
+  }
+]
+
+###
+
