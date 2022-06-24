@@ -17,13 +17,13 @@ import java.util.stream.StreamSupport;
 
 @TestComponent
 public class PropertyLogger {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertyLogger.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertyLogger.class);
 
     @EventListener
     public void handleContextRefresh(ContextRefreshedEvent event) {
         final Environment environment = event.getApplicationContext().getEnvironment();
-        LOGGER.info("====== Environment and configuration ======");
-        LOGGER.info("Active profiles: {}", Arrays.toString((environment.getActiveProfiles())));
+        logger.info("====== Environment and configuration ======");
+        logger.info("Active profiles: {}", Arrays.toString((environment.getActiveProfiles())));
         final MutablePropertySources sources = ((AbstractEnvironment) environment).getPropertySources();
         StreamSupport.stream(sources.spliterator(), false)
                 .filter(ps -> ps instanceof EnumerablePropertySource)
@@ -31,7 +31,7 @@ public class PropertyLogger {
                 .flatMap(Arrays::stream)
                 .distinct()
                 .filter(prop -> !(prop.contains("credentials") || prop.contains("password")))
-                .forEach(prop -> LOGGER.info("{}: {}", prop, environment.getProperty(prop)));
-        LOGGER.info("===========================================");
+                .forEach(prop -> logger.info("{}: {}", prop, environment.getProperty(prop)));
+        logger.info("===========================================");
     }
 }
