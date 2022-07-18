@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-build-publish-image:
-    uses: felleslosninger/eid-github-workflows/.github/workflows/eid-spring-boot-build-publish-image-generic.yml@main
+    uses: felleslosninger/eid-github-workflows/.github/workflows/spring-boot-build-publish-image.yml@main
     with:
       image-name: event-statistikk/inndata-api
       java-version: 17
@@ -26,7 +26,7 @@ jobs:
 
   call-update-image-version:
     needs: call-build-publish-image
-    uses: felleslosninger/eid-github-workflows/.github/workflows/eid-update-image-version.yml@main
+    uses: felleslosninger/eid-github-workflows/.github/workflows/update-image-version.yml@main
     with:
       image-name: event-statistikk/inndata-api
       image-version: ${{ needs.call-build-publish-image.outputs.image-version }}

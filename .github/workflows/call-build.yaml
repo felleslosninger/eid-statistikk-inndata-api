@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-workflow-image-build-publish:
-    uses: felleslosninger/eid-github-workflows/.github/workflows/eid-maven-build.yml@main
+    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-build.yml@main
     with:
       java-version: 17
     secrets:
