@@ -12,7 +12,6 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import no.difi.statistics.InndataAPI;
-import no.difi.statistics.PropertyLogger;
 import no.difi.statistics.api.IngestResponse;
 import no.difi.statistics.elasticsearch.Client;
 import no.difi.statistics.elasticsearch.IdResolver;
@@ -24,8 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -79,8 +76,6 @@ public class ElasticsearchIngestServiceTest {
                     .parse("docker.elastic.co/elasticsearch/elasticsearch")
                     .withTag(ELASTICSEARCH_VERSION));
 
-    private static final Logger logger = LoggerFactory.getLogger(PropertyLogger.class);
-
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         @Override
@@ -97,6 +92,7 @@ public class ElasticsearchIngestServiceTest {
     static void setUp() {
         container.start();
         assertTrue(container.isRunning());
+        jwk = createKey();
     }
 
     @AfterAll
@@ -120,23 +116,18 @@ public class ElasticsearchIngestServiceTest {
 
     @BeforeEach
     public void setupMaskinporten() {
+        elasticsearchHelper = new ElasticsearchHelper(client);
+        elasticsearchHelper.waitForGreenStatus();
+
         stubFor(any(urlMatching(".*well-known.*"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBody(wellKnown)));
-        jwk = createKey();
         stubFor(any(urlMatching(".*jwk.*"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBody("{\"keys\":[" + jwk.toJSONString() + "]}")));
     }
-
-    @BeforeEach
-    public void prepare() {
-        elasticsearchHelper = new ElasticsearchHelper(client);
-        elasticsearchHelper.waitForGreenStatus();
-    }
-
 
     private static RSAKey createKey() {
         try {
