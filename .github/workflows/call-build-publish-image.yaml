@@ -31,7 +31,7 @@ jobs:
       image-name: event-statistikk/inndata-api
       image-version: ${{ needs.call-build-publish-image.outputs.image-version }}
       image-digest: ${{ needs.call-build-publish-image.outputs.image-digest }}
-      kubernetes-repo: eid-event-statistikk
+      kubernetes-repo: event-statistikk-cd
       kubernetes-repo-event: update-version
     secrets:
       eid-build-token: ${{ secrets.EID_BUILD_PAT }}
