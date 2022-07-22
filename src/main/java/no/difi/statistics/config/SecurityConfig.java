@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // No authentication required for health check path or env
                 .antMatchers(GET, "/health", "/env/**").permitAll()
                 // Authentication required for ingest methods. Username must be equal to owner of series.
-                .antMatchers(POST, "/{owner}/{seriesName}/**").authenticated()
+                // test without authentication .antMatchers(POST, "/{owner}/{seriesName}/**").authenticated()
+                .antMatchers(POST, "/{owner}/{seriesName}/**").permitAll()
                 // No authentication required for getting last point on a series
                 .antMatchers(GET, "/{owner}/{seriesName}/{distance}/last").permitAll()
                 .anyRequest().authenticated()
