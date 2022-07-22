@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
@@ -60,7 +61,7 @@ public class IngestRestController {
             value = "{owner}/{seriesName}/{distance}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    //@PreAuthorize("hasAuthority('SCOPE_digdir:statistikk.skriv')")
+    @PreAuthorize("hasAuthority('SCOPE_digdir:statistikk.skriv')")
     public IngestResponse ingest(
             @Parameter(hidden = true) @AuthenticationPrincipal Jwt principal,
             @Parameter(name = "owner", example = "991825827", required = true, description = "eigar av tidsserien i form av eit organisasjonsnummer")
