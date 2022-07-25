@@ -67,7 +67,7 @@ public class ElasticsearchIngestService implements IngestService {
     public TimeSeriesPoint last(TimeSeriesDefinition seriesDefinition) {
         List<String> indexNames = IndexNameResolver.resolveIndexName().seriesDefinition(seriesDefinition).list();
         SearchRequest request = new SearchRequest(indexNames.toArray(new String[0]))
-                .types(indexType)
+                //.types(indexType)
                 .indicesOptions(IndicesOptions.fromOptions(true, true, true, false))
                 .source(searchSource()
                         .sort(timeFieldName, SortOrder.ASC)

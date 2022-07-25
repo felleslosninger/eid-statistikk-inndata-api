@@ -21,7 +21,6 @@ import no.difi.statistics.model.TimeSeriesPoint;
 import no.difi.statistics.test.utils.ElasticsearchHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +36,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Instant;
@@ -67,10 +68,11 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @TestPropertySource(properties = {"file.base.difi-statistikk=src/test/resources/apikey"})
 @ActiveProfiles("test")
 @WireMockTest(httpPort = 8888)
+@Testcontainers
 public class ElasticsearchIngestServiceTest {
 
     private static final String ELASTICSEARCH_VERSION = "7.17.2";
-    @ClassRule
+    @Container
     public static ElasticsearchContainer container = new ElasticsearchContainer(
             DockerImageName
                     .parse("docker.elastic.co/elasticsearch/elasticsearch")
