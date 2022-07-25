@@ -4,9 +4,8 @@
 name: Build and test on non-main branches
 
 on:
-  push:
-    branches-ignore:
-      - main
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
 
 jobs:
   call-workflow-image-build-publish:

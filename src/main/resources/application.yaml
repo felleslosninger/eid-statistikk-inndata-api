@@ -1,30 +1,39 @@
 logging:
-    level:
-        'no':
-            difi: INFO
-        org: INFO
-management:
-    endpoints:
-        web:
-            base-path: /
+  level:
+    'no':
+      difi: INFO
+    org: INFO
 'no':
-    difi:
-        statistics:
-            elasticsearch:
-                host: localhost
-                port: 9200
-                apikey: fake-secret
+  difi:
+    statistics:
+      elasticsearch:
+        host: localhost
+        port: 9200
+        apikey: fake-secret
 
 spring:
-    jackson:
-        default-property-inclusion: NON_EMPTY
-    security:
-        oauth2:
-            resourceserver:
-                jwt:
-                    issuer-uri: https://test.maskinporten.no/
+  jackson:
+    default-property-inclusion: NON_EMPTY
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://test.maskinporten.no/
 springdoc:
-    swagger-ui:
-        oauth:
-            client-id: test
-            client-secret: test2
+  swagger-ui:
+    oauth:
+      client-id: test
+      client-secret: test2
+# Spring Boot Actuator
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "health, info, version, prometheus"
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+      probes:
+        enabled: true
