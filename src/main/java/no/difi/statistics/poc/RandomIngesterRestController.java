@@ -1,5 +1,6 @@
 package no.difi.statistics.poc;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import no.difi.statistics.IngestService;
 import no.difi.statistics.model.MeasurementDistance;
 import no.difi.statistics.model.TimeSeriesDefinition;
@@ -25,6 +26,7 @@ public class RandomIngesterRestController {
         this.service = service;
     }
 
+    @Hidden
     @RequestMapping(
             method = RequestMethod.POST,
             value = "{owner}/{seriesName}/{distance}",
