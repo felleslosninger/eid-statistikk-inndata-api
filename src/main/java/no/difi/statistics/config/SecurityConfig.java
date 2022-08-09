@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // No authentication required for documentation paths used by Swagger
                 .antMatchers(GET, "/", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**", "/webjars/**").permitAll()
                 // No authentication required for health check path or env
-                .antMatchers(GET, "/health", "/env/**").permitAll()
+                .antMatchers(GET, "/health/**", "/info/**", "/version/**", "/prometheus/**").permitAll()
                 // Authentication required for ingest methods. Username must be equal to owner of series.
                 .antMatchers(POST, "/{owner}/{seriesName}/**").authenticated()
                 // No authentication required for getting last point on a series
