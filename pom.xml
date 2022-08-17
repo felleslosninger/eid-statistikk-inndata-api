@@ -24,7 +24,7 @@
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.33.2</wiremock.version>
         <jackson.datatype.version>2.13.3</jackson.datatype.version>
-        <springdoc.version>1.6.9</springdoc.version>
+        <springdoc.version>1.6.10</springdoc.version>
         <jaxb.version>2.3.1</jaxb.version>
         <javax.json.version>1.1.4</javax.json.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
