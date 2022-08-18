@@ -25,7 +25,6 @@
         <wiremock.version>2.33.2</wiremock.version>
         <jackson.datatype.version>2.13.3</jackson.datatype.version>
         <springdoc.version>1.6.10</springdoc.version>
-        <jakarta.version>4.0.0</jakarta.version>
         <javax.json.version>1.1.4</javax.json.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
     </properties>
@@ -82,15 +81,9 @@
             <version>${springdoc.version}</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jakarta.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>${jakarta.version}</version>
-            <scope>runtime</scope>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
