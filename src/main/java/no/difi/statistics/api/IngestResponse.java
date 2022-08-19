@@ -1,13 +1,10 @@
 package no.difi.statistics.api;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
 
-@XmlRootElement
 public class IngestResponse {
 
     public enum Status {Ok, Failed, Conflict}
@@ -18,7 +15,6 @@ public class IngestResponse {
         // Use builder
     }
 
-    @XmlElement
     public List<Status> getStatuses() {
         return unmodifiableList(statuses);
     }
