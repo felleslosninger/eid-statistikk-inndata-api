@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import javax.xml.bind.annotation.XmlElement;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -41,7 +40,6 @@ public class TimeSeriesPoint implements Comparable<TimeSeriesPoint> {
         return measurements.entrySet().stream().filter(e -> e.getKey().equals(name)).map(Map.Entry::getValue).findFirst();
     }
 
-    @XmlElement
     public Optional<Map<String, String>> getCategories() {
         return categories == null ? Optional.empty() : Optional.of(unmodifiableMap(categories));
     }
