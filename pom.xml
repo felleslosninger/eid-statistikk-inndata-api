@@ -24,7 +24,6 @@
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.33.2</wiremock.version>
         <springdoc.version>1.6.10</springdoc.version>
-        <javax.validation.version>2.0.1.Final</javax.validation.version>
     </properties>
 
     <repositories>
@@ -81,11 +80,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>${javax.validation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
