@@ -19,14 +19,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <statistics-common-api-lib.version>0.0.16</statistics-common-api-lib.version>
+        <statistics-common-api-lib.version>0.0.18</statistics-common-api-lib.version>
         <statistics-client-lib.version>0.0.4</statistics-client-lib.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.33.2</wiremock.version>
-        <jackson.datatype.version>2.13.3</jackson.datatype.version>
         <springdoc.version>1.6.10</springdoc.version>
-        <jakarta.version>4.0.0</jakarta.version>
-        <javax.json.version>1.1.4</javax.json.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
     </properties>
 
@@ -67,11 +64,6 @@
             <version>${statistics-common-api-lib.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
-            <version>${javax.json.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${springdoc.version}</version>
@@ -80,17 +72,6 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jakarta.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>${jakarta.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
