@@ -23,7 +23,7 @@
         <statistics-client-lib.version>0.0.4</statistics-client-lib.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.33.2</wiremock.version>
-        <springdoc.version>1.6.10</springdoc.version>
+        <springdoc.version>1.6.11</springdoc.version>
     </properties>
 
     <repositories>
