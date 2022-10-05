@@ -29,6 +29,7 @@
          -->
         <snakeyaml.version>1.31</snakeyaml.version>
         <springdoc.version>1.6.11</springdoc.version>
+        <jackson-bom.version>2.14.0-rc1</jackson-bom.version>
     </properties>
 
     <repositories>
