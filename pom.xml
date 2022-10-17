@@ -28,7 +28,7 @@
             So we must manually upgrade it to newer version until Spring Boot contains the upgraded version. Otherwise, container scan will fail.
          -->
         <snakeyaml.version>1.31</snakeyaml.version>
-        <springdoc.version>1.6.11</springdoc.version>
+        <springdoc.version>1.6.12</springdoc.version>
         <jackson-bom.version>2.14.0-rc1</jackson-bom.version>
     </properties>
 
