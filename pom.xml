@@ -22,7 +22,7 @@
         <statistics-common-api-lib.version>0.0.20</statistics-common-api-lib.version>
         <statistics-client-lib.version>0.0.5</statistics-client-lib.version>
         <testcontainers.version>1.17.5</testcontainers.version>
-        <wiremock.version>2.34.0</wiremock.version>
+        <wiremock.version>2.35.0</wiremock.version>
         <logstash.logback.version>7.2</logstash.logback.version>
         <!--
             Spring Boot v. 2.7.3 uses snakeyaml v. 1.30 which includes issue https://github.com/spring-projects/spring-boot/issues/32221
