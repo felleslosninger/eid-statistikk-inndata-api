@@ -12,6 +12,8 @@ logging:
         apikey: fake-secret
 
 spring:
+  application:
+    name: InndataAPI
   jackson:
     default-property-inclusion: NON_EMPTY
   security:
