@@ -25,10 +25,7 @@
         <wiremock.version>2.35.0</wiremock.version>
         <logstash.logback.version>7.2</logstash.logback.version>
         <springdoc.version>1.6.14</springdoc.version>
-        <!--
-            Spring Boot v. 2.7.7 uses snakeyaml v. 1.30 which includes issue https://github.com/spring-projects/spring-boot/issues/32221
-            So we must manually upgrade it to newer version until Spring Boot contains the upgraded version. Otherwise, container scan will fail.
-        -->
+        <!-- CVE-2022-1471   -->
         <snakeyaml.version>1.33</snakeyaml.version>
     </properties>
 
