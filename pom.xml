@@ -24,7 +24,7 @@
         <testcontainers.version>1.17.6</testcontainers.version>
         <wiremock.version>2.35.0</wiremock.version>
         <logstash.logback.version>7.2</logstash.logback.version>
-        <springdoc.version>1.6.14</springdoc.version>
+        <springdoc.version>1.6.15</springdoc.version>
         <!-- CVE-2022-1471   -->
         <snakeyaml.version>1.33</snakeyaml.version>
     </properties>
